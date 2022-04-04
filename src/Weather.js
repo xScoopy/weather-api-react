@@ -3,22 +3,27 @@ import RadioButton from "./RadioButton";
 import WeatherDisplay from "./WeatherDisplay";
 import "./Weather.css";
 const Weather = () => {
+  //grab apikey from env file
   const weatherKey = `${process.env.REACT_APP_APIKEY}`;
+  //setup state
   const [zip, setZip] = useState("");
   const [unit, setUnit] = useState("");
   const [data, setData] = useState(null);
+  //setup fetch function
   const fetchWeather = async () => {
     const path = `https://api.openweathermap.org/data/2.5/weather?zip=${zip}&appid=${weatherKey}&units=${unit}`;
 
     const res = await fetch(path);
     const json = await res.json();
 
+    //retrieve code and message in the event of an error
     const cod = json.cod;
     const message = json.message;
     if (cod !== 200) {
-        setData({cod, message})
-        return
+      setData({ cod, message });
+      return;
     }
+    //retrieve relevant data on 200 code
     const temp = json.main.temp;
     const feelsLike = json.main.feels_like;
     const description = json.weather[0].description;
