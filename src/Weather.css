@@ -5,7 +5,7 @@
 
 }
 
-.Weather > form > input {
+.Weather > form input {
     padding: 1rem;
     font-size: 1rem;
     border: 1px solid;
@@ -13,7 +13,7 @@
     border-radius: 0.5rem 0 0 0.5rem;
 }
 
-.Weather > form > button {
+.Weather > form button {
     padding: 1rem;
     font-size: 1rem;
     border: 1px solid;
@@ -22,4 +22,7 @@
     color: #eee;
     border-radius: 0 0.5rem 0.5rem 0;
 
+}
+.Weather > form > select {
+    margin-top: 1rem;
 }
