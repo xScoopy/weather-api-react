@@ -1,32 +1,52 @@
 import { useState } from "react";
 import RadioButton from "./RadioButton";
+import WeatherDisplay from "./WeatherDisplay";
 import "./Weather.css";
 const Weather = () => {
-
   const weatherKey = `${process.env.REACT_APP_APIKEY}`;
-  console.log(weatherKey)
   const [zip, setZip] = useState("");
   const [unit, setUnit] = useState("");
   const [data, setData] = useState(null);
-
   const fetchWeather = async () => {
-      await fetch()
-      return
-  }
+    const path = `https://api.openweathermap.org/data/2.5/weather?zip=${zip}&appid=${weatherKey}&units=${unit}`;
+
+    const res = await fetch(path);
+    const json = await res.json();
+
+    const cod = json.cod;
+    const message = json.message;
+    if (cod !== 200) {
+        setData({cod, message})
+        return
+    }
+    const temp = json.main.temp;
+    const feelsLike = json.main.feels_like;
+    const description = json.weather[0].description;
+
+    setData({
+      cod,
+      message,
+      temp,
+      feelsLike,
+      description,
+    });
+  };
 
   return (
     <div className="Weather">
-      <h1>
-        {data !== null ? data : "No weather data"}
-      </h1>
-      <form onSubmit={(e) => {e.preventDefault()}}>
+      {data !== null ? <WeatherDisplay {...data} /> : "No weather data"}
+      <form
+        onSubmit={(e) => {
+          e.preventDefault();
+          fetchWeather();
+        }}
+      >
         <div>
           <input
             placeholder="Enter Zip Code"
             value={zip}
             onChange={(e) => {
               setZip(e.target.value);
-              fetchWeather();
             }}
           />
           <button type="submit">Submit</button>
