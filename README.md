@@ -1,5 +1,8 @@
 # Getting Started with Create React App
 
+**YOU WILL NEED TO USE YOUR OWN APIKEY IN A .ENV FILE IN THE PROJECT'S ROOT DIRECTORY WITH THE FOLLOWING KEY:**
+>REACT_APP_APIKEY
+
 This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
 
 ## Available Scripts
