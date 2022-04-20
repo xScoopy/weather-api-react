@@ -2,13 +2,21 @@ import { useState } from "react";
 import RadioButton from "./RadioButton";
 import WeatherDisplay from "./WeatherDisplay";
 import "./Weather.css";
+import { useDispatch } from "react-redux";
+import { loadWeather } from "./actions";
 const Weather = () => {
   //grab apikey from env file
   const weatherKey = `${process.env.REACT_APP_APIKEY}`;
+
   //setup state
   const [zip, setZip] = useState("");
   const [unit, setUnit] = useState("");
+
+  // const data = useSelector(state => state.weather)
   const [data, setData] = useState(null);
+
+  const dispatch = useDispatch()
+
   //setup fetch function
   const fetchWeather = async () => {
     const path = `https://api.openweathermap.org/data/2.5/weather?zip=${zip}&appid=${weatherKey}&units=${unit}`;
@@ -43,6 +51,7 @@ const Weather = () => {
       <form
         onSubmit={(e) => {
           e.preventDefault();
+          dispatch(loadWeather(zip))
           fetchWeather();
         }}
       >
